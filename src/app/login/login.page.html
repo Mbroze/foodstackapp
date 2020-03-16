@@ -1,0 +1,22 @@
+<ion-content>
+
+  <div class="bg-color">
+    <form #form="ngForm" (ngSubmit)="register(form)">
+      <ion-grid>
+        <ion-row color="primary" justify-content-center>
+          <ion-col align-self-center size-md="12" size-lg="5" size-xs="12">
+            <div class="home-logo" text-center>
+              <img src="assets/images/logo.png" />
+            </div>
+            <div class="inn-content">
+              <ion-input name="mobile" type="text" placeholder="Enter your Mobile No.." class="mob-input" minlength=10 maxlength=10 ngModel required>
+              </ion-input>
+              <ion-button size="large" type="submit" [disabled]="form.invalid" class="login-btn" expand="block">LOGIN</ion-button>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </form>
+  </div>
+
+</ion-content>

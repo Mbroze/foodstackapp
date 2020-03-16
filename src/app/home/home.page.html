@@ -1,0 +1,80 @@
+<!-- <ion-header [translucent]="false">
+  <app-header></app-header>
+</ion-header> -->
+
+
+<ion-content [fullscreen]="true">
+
+  <div class="hm-top">
+    <div class="search-bar">
+      <ion-input name="mobile" type="text" placeholder="search your food.." class="mob-input" ngModel required>
+      </ion-input>
+    </div>
+
+    <div class="food-cat" scrollx="true">
+      <div class="cat-item" *ngFor="let category of categories">
+        <div class="cat-img">
+          <img src="{{category.image}}" />
+        </div>
+        <div class="cat-name">{{category.name}}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 
+  <ion-slides pager="true" [options]="slideOptsOne" #slideWithNav>
+    <ion-slide *ngFor="let slide of slides">
+      <img src={{slide.image}}>
+    </ion-slide>
+  </ion-slides> -->
+
+  <div class="home-content">
+    <div class="sel-cat-title">
+      <h2>Recommended </h2>
+      <div class="cat-actions">
+        <span>
+          <ion-icon name="funnel"></ion-icon>
+        </span>
+        <span>
+          <ion-icon name="filter"></ion-icon>
+        </span>
+      </div>
+      <br style="clear: both;" />
+    </div>
+
+    <div class="menu-wrapper" *ngIf="menuData">
+      <!-- <div class="menu-item"> </div>
+    <div class="menu-item"> </div> -->
+
+    <!--   <div class="menu-item1" *ngFor="let menu of menuData">
+        <div class="menu-img1"
+          [style.backgroundImage]="'url('+ menu.image +')'">
+        </div>
+        <div class="menu-action1">
+          <div class="menu-desc-top">
+            <span class="menu-name">{{menu.name}}</span>
+            <span class="menu-price">&#8377;{{menu.price}}</span>
+          </div>
+          <div class="menu-desc-bot">
+            Delivery Time: 30 mins
+          </div>
+        </div>
+      </div> -->
+
+      <div class="menu-item" *ngFor="let menu of menuData">
+        <div class="menu-img">
+          <img src="/assets/images/cat-chinese.jpg" />
+          <div class="menu-name">{{menu.Menu_Name}}</div>
+        </div>
+        <div class="menu-action">
+          <span class="menu-price">&#8377;{{menu.Price}}</span>
+          <span class="add-btn" (click)="cartService.addToCart(menu)">
+            <ion-icon name="add"></ion-icon> ADD
+          </span>
+        </div>
+      </div>
+      <br style="clear: both;" />
+    </div>
+  </div>
+  <!--  <app-explore-container name="Tab 1 page"></app-explore-container> -->
+</ion-content>

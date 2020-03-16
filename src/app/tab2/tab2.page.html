@@ -1,0 +1,68 @@
+<ion-header class="custom-head" [translucent]="false">
+ <!--  <app-header></app-header> -->
+ <div>  <ion-icon name="arrow-back-outline" (click)='goBack()'></ion-icon> Cart Details</div>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="padt20"></div>
+  <ng-container *ngIf="cartService.cartDetails.length>0;else emptycart">
+    <div class="citem" *ngFor="let cartItem of cartService.cartDetails">
+      <div class="cleft">
+        <!-- <img src="{{cartItem.image}}" />  -->{{cartItem.Menu_Name}}
+      </div>
+      <div class="cright">
+        <span class="qty-block">
+          <ion-icon name="remove" (click)="cartService.removeFromCart(cartItem)"></ion-icon> <span
+            class="qty">{{cartItem.Quantity}}</span>
+          <ion-icon name="add" (click)="cartService.addToCart(cartItem)"></ion-icon>
+        </span>
+        <span class="price">&#8377;{{cartItem.Quantity * cartItem.MenuPrice}}</span>
+      </div>
+      <br style="clear: both;" />
+    </div>
+    <div class="greyarea"></div>
+    <div class="bill-block">
+      <h4>Bill Details</h4>
+      <div class="bill-row">
+        <div class="bleft">
+          Item Total
+        </div>
+        <div class="bright">
+          <span class="price">&#8377;{{ cartService.getItemTotal() }}</span>
+        </div>
+        <br style="clear: both;" />
+      </div>
+
+      <div class="bill-row">
+        <div class="bleft">
+          Processing Fee (2%)
+        </div>
+        <div class="bright">
+          <span class="price">&#8377;{{ cartService.getProcessingFee() }}</span>
+        </div>
+        <br style="clear: both;" />
+      </div>
+
+      <hr />
+
+      <div class="bill-row">
+        <div class="bleft">
+          To Pay
+        </div>
+        <div class="bright">
+          <span class="price">&#8377;{{ cartService.getItemTotal() + cartService.getProcessingFee() }}</span>
+        </div>
+        <br style="clear: both;" />
+      </div>
+
+      <div class="text-center">
+        <span class="checkout-btn" (click)="checkOut()">Proceed to Checkout</span>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #emptycart>
+    <div id="container">
+      <p text-center>Cart is empty!</p>
+    </div>
+  </ng-template>
+</ion-content>removeFromCart

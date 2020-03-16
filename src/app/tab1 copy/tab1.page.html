@@ -1,0 +1,28 @@
+<ion-header [translucent]="true">
+  <app-header></app-header>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+ <!--  <ion-slides pager="true" [options]="slideOptsOne" #slideWithNav>
+    <ion-slide *ngFor="let slide of slides">
+      <img src={{slide.image}}>
+    </ion-slide>
+  </ion-slides> -->
+
+  <div class="home-wrapper" *ngIf="menuData">
+    <!-- <div class="menu-item"> </div>
+    <div class="menu-item"> </div> -->
+    <div class="menu-item" *ngFor="let menu of menuData">
+      <div class="menu-img">
+        <img src="{{menu.image}}" />
+        <div class="menu-name">{{menu.name}}</div>
+      </div>
+      <div class="menu-action">
+        <span class="menu-price">&#8377;{{menu.price}}</span>
+        <span class="add-btn" (click)="cartService.addToCart(menu)"><ion-icon name="add"></ion-icon> ADD</span>
+      </div>
+    </div>
+    <br style="clear: both;" />
+  </div>
+  <!--  <app-explore-container name="Tab 1 page"></app-explore-container> -->
+</ion-content>

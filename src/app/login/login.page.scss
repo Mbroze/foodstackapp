@@ -1,0 +1,31 @@
+.bg-color{
+    height: 100%;
+    background-image: linear-gradient(to bottom, #ffd7e1, #bcb8ff);
+}
+
+.home-logo{
+    width: 80%;
+    margin: 100px auto 10px;
+    max-width: 300px;
+}
+
+.mob-input{
+    border: 1px solid #e3e2ef;
+    border-radius: 10px;
+    background: #fff;
+    padding: 5px 10px!important;
+    height: auto;
+    margin-bottom: 15px;
+}
+
+.inn-content{
+    padding: 20px 15px;
+}
+
+.login-btn{
+    height: auto;
+    --padding-top: 15px!important;
+    --padding-bottom: 15px!important;
+    --background :#06023c!important; 
+    --border-radius: 10px!important;
+}

@@ -1,0 +1,70 @@
+<ion-header class="custom-head" [translucent]="false">
+  <!--  <app-header></app-header> -->
+  <div>
+    <ion-icon name="arrow-back-outline" (click)='goBack()'></ion-icon>Update Profile
+  </div>
+</ion-header>
+
+<ion-content>
+  <div class="up-sec">
+    <form #form="ngForm" (ngSubmit)="saveDetails(form)">
+      <ion-grid>
+        <ion-row color="primary" justify-content-center>
+          <ion-col align-self-center size-md="12" size-lg="5" size-xs="12">
+            <div class="inn-content">
+              <ion-input name="name" type="text" placeholder="Firstame.." class="mob-input" [(ngModel)]='firstname' required>
+              </ion-input>
+              <ion-input name="lastname" type="text" placeholder="Lastname.." class="mob-input" [(ngModel)]='lastname' required>
+              </ion-input>
+              <ion-input name="email" type="email" placeholder="Email.." class="mob-input" [(ngModel)]='email' required>
+              </ion-input>
+              <ion-input name="mobile" type="text" placeholder="Mobile No.." class="mob-input" [(ngModel)]='mobile' disabled>
+              </ion-input>
+
+              
+                <ion-radio-group name="gender" [(ngModel)]="gender">
+                  <ion-row>
+                  <ion-col size=6>
+                    <ion-item>
+                      <ion-label>Male</ion-label>
+                      <ion-radio slot="start" value="Male"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size=6>
+                    <ion-item>
+                      <ion-label>Female</ion-label>
+                      <ion-radio slot="start" value="Female"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+                </ion-radio-group>
+                <br/>
+                <ion-input name="address" type="text" placeholder="Address.." class="mob-input" [(ngModel)]='address' >
+                </ion-input>
+
+                <ion-radio-group name="custType" [(ngModel)]="custType">
+                  <span>Customer Type</span>
+                  <ion-row>
+                  <ion-col size=6>
+                    <ion-item>
+                      <ion-label>Staff</ion-label>
+                      <ion-radio slot="start" value="Staff"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size=6>
+                    <ion-item>
+                      <ion-label>Student</ion-label>
+                      <ion-radio slot="start" value="Student"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+                </ion-radio-group>
+              <ion-button size="large" type="submit" [disabled]="form.invalid" class="login-btn" expand="block">Save Details
+              </ion-button>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </form>
+  </div>
+</ion-content>

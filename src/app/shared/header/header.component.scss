@@ -1,0 +1,43 @@
+.bg-color{
+    height: 176px;
+    background-image: linear-gradient(to right, #ffd7e1, #bcb8ff);
+    text-align: center;
+}
+
+.head-logo{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+.head-logo img{
+    vertical-align: middle;
+    width: 50%;
+}
+
+.cart{
+   position: absolute;
+    right: 13px;
+    line-height: 56px;
+
+    .notify{
+        position: absolute;
+        right: -5px;
+        top: 8px;
+        width: 20px;
+        height: 20px;
+        background: #d02417;
+        display: inline-block;
+        line-height: 20px;
+        border-radius: 50%;
+        color: #fff;
+        font-size: 0.8rem;
+        z-index: 1;
+        font-weight: 700;
+    }
+}
+
+ion-icon{
+    font-size: 30px;
+    color: #fff;
+    vertical-align: middle;
+}
