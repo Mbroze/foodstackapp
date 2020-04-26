@@ -18,14 +18,20 @@ export class CartService {
 
     let customerDetails = await this.storage.get('CustomerProfileData')
     customerDetails = JSON.parse(customerDetails)
+
+    if(customerDetails){
+
+    
     const postData = {
-      "CustomerId": customerDetails.CustomerId
+      "CustomerId": customerDetails.CustomerId 
     }
 
     this.httpService.httpPost(`${Config.apiEndPoint}Services/CustomerGetCartDetails`, postData)
       .subscribe((response: any) => {
         this.cartDetails = response.Data.CustomerAddToCartData
       })
+    
+    }
   }
 
 

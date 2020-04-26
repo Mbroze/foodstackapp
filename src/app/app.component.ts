@@ -25,7 +25,8 @@ export class AppComponent {
     this.platform.ready().then(async () => {
       this.statusBar.styleDefault();
       let customerDetails = await this.storage.get('CustomerProfileData')
-      if (!customerDetails) this.router.navigate(['login'])
+      this.router.navigate(['tabs/tab3'])
+     // if (!customerDetails) this.router.navigate(['login'])
       this.splashScreen.hide();
     });
   }

@@ -13,7 +13,7 @@ import { async } from '@angular/core/testing';
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss']
 })
-export class Tab2Page  {
+export class Tab2Page {
   customerDetails: any
   constructor(public cartService: CartService,
     private utilService: UtilService,
@@ -21,9 +21,9 @@ export class Tab2Page  {
     private router: Router,
     private httpService: HttpService,
     private loadingController: LoadingController,
-    private navCtrl: NavController) { 
-      
-    }
+    private navCtrl: NavController) {
+
+  }
 
   /* async ngOnInit() {
     this.cartService.getCartDetails().then(() => { })
@@ -35,16 +35,16 @@ export class Tab2Page  {
 
   } */
 
-  async ionViewWillEnter(){
+  async ionViewWillEnter() {
 
-    setTimeout(async() => {
+    setTimeout(async () => {
       this.cartService.getCartDetails().then(() => { })
       this.customerDetails = await this.storage.get('CustomerProfileData')
       this.customerDetails = JSON.parse(this.customerDetails)
-  
+
       console.log(this.customerDetails);
     }, 1000);
-   
+
 
 
   }
@@ -56,9 +56,14 @@ export class Tab2Page  {
 
 
 
-  async  checkOut() {
+  async checkOut() {
+    console.log(this.customerDetails)
 
+    const custDetails = await this.storage.get('CustomerProfileData')
+    this.customerDetails = JSON.parse(custDetails)
     if (this.customerDetails.Address && this.customerDetails.FirstName) {
+
+
       const postData = {
         "CustomerId": this.customerDetails.CustomerId,
         "TotalAmount": this.cartService.getItemTotal(),
@@ -73,14 +78,14 @@ export class Tab2Page  {
       this.httpService.httpPost(`${Config.apiEndPoint}Services/CustomerPlaceOrder`, postData)
         .subscribe(async (response: any) => {
 
-          if(response.Data.isSuccess){
+          if (response.Data.isSuccess) {
             this.utilService.presentToast('Payment Successfully Done.')
           } else {
             this.utilService.presentToast(response.Data.Message)
           }
 
           this.cartService.getCartDetails()
-
+          this.router.navigate([`ordersuccess/${response.Data.CustomerPlaceOrderHistoryData[0].Order_Id}`])
           await loading.dismiss();
           return;
           //this.cartDetails = response.Data.CustomerAddToCartData

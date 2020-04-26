@@ -1,7 +1,9 @@
 <ion-header class="custom-head" [translucent]="false">
   <!--  <app-header></app-header> -->
-  <div>  <ion-icon name="arrow-back-outline" (click)='goBack()'></ion-icon> My Account</div>
- </ion-header>
+  <div>
+    <ion-icon name="arrow-back-outline" (click)='goBack()'></ion-icon> My Account
+  </div>
+</ion-header>
 
 <ion-content [fullscreen]="true">
   <!-- <ion-header collapse="condense">
@@ -10,16 +12,43 @@
     </ion-toolbar>
   </ion-header> -->
 
-  <diV class="acc-sec">
-    <div class="acc-action" >
-      <span routerLink="/update-profile" >Edit Profile</span>
+  <diV class="acc-sec" >
+    <ng-container *ngIf="customerDetails">
+    <div class="acc-action">
+      <span routerLink="/update-profile">Edit Profile</span>
     </div>
-    <h2>SIDDHESH BAIT</h2>
-    <h3>8600366639</h3>
-    <p>b-02 Ostwal Valley boisar 401501</p>
+    <h2>{{customerDetails.FirstName}}&nbsp;{{customerDetails.LastName}}</h2>
+    <h3>{{customerDetails.MobileNo}}</h3>
+    <p>{{customerDetails.Address}} </p>
+  </ng-container>
+  <ng-container *ngIf="!customerDetails">
+    <div class="acc-action">
+      <span routerLink="/update-profile">Edit Profile</span>
+    </div>
+    <h2>Profile not update</h2>
+  </ng-container>
   </diV>
 
   <div class="greyarea"></div>
-<!-- 
+
+  <div class="pastorders" *ngIf="orderList">
+    <div class="order-block" *ngFor="let order of orderList; let i = index">
+      <div class="bot" *ngIf="i != 0">
+        <hr/>
+      </div>
+      <div class="top">
+        <h2> OrderId : {{ order.Order_Id }}</h2>
+        <span class="{{order.OrderStatus}}"> {{ getStatus(order.OrderStatus)}}  </span>
+        <br style="clear: both;"/>
+      </div>
+      <div class="mid">
+        <span>&#8377; {{ order.Amount }}</span>
+      </div>
+    
+    </div>
+
+  </div>
+  <div style="height: 20px;"></div>
+  <!-- 
   <app-explore-container name="Tab 3 page"></app-explore-container> -->
 </ion-content>

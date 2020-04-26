@@ -11,34 +11,18 @@ import { NavController, LoadingController } from '@ionic/angular';
 })
 export class Tab3Page implements OnInit {
 
-  customerDetails:any
+  customerDetails: any
+  orderList: any
   constructor(private httpService: HttpService, private storage: Storage,
     private loadingController: LoadingController,
     private navCtrl: NavController) { }
 
   async ngOnInit() {
-
-   /*  const postData = {
-      CustomerId: this.customerDetails.CustomerId,
-      "MobileNo": this.customerDetails.MobileNo,
-      "FirstName": "Siddhesh",
-      "LastName": "Bait",
-      "Email": "sidbait@gmail.com",
-      "Address": "Boisar",
-      "Category": "Staff"
-    } */
-   /*  this.httpService.httpPost(`${Config.apiEndPoint}Services/UpdateCustomerProfile`, postData)
-      .subscribe((response: any) => {
-        
-        if (response.Data.isSuccess)
-          this.storage.set('CustomerProfileData', JSON.stringify(response.Data.CustomerProfileData));
-        //this.menuData = response.Data
-      }) */
-  }
-
-  async ionViewWillEnter() {
     this.customerDetails = await this.storage.get('CustomerProfileData')
     this.customerDetails = JSON.parse(this.customerDetails)
+
+
+    console.log(this.customerDetails);
 
 
     const loading = await this.loadingController.create({
@@ -50,19 +34,35 @@ export class Tab3Page implements OnInit {
       CustomerId: this.customerDetails.CustomerId,
     }
     this.httpService.httpPost(`${Config.apiEndPoint}Services/GetCustomerPlaceOrderHistory`, postData)
-    .subscribe(async (response: any) => {
-      
-      
-      
-      if (response.Data.isSuccess){}
-      await loading.dismiss();
-       /*  this.storage.set('CustomerProfileData', JSON.stringify(response.Data.CustomerProfileData)); */
-      //this.menuData = response.Data
-    }) 
+      .subscribe(async (response: any) => {
+
+
+
+        if (response.Data && response.Data.length > 0) {
+          this.orderList = response.Data.slice(0, 5)
+        }
+
+        console.log(this.orderList);
+
+        await loading.dismiss();
+        /*  this.storage.set('CustomerProfileData', JSON.stringify(response.Data.CustomerProfileData)); */
+        //this.menuData = response.Data
+      })
+  }
+
+
+  getStatus(status) {
+    if (status == "PENDING") {
+      return "Out for Delivery"
+    } else if (status == "SUCCESS") {
+      return "Delivered"
+    } else {
+      return status
+    }
   }
 
   goBack() {
     this.navCtrl.back();
-    }
+  }
 
 }

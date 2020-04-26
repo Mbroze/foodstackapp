@@ -7,16 +7,17 @@
 
   <div class="hm-top">
     <div class="search-bar">
-      <ion-input name="mobile" type="text" placeholder="search your food.." class="mob-input" ngModel required>
+      <ion-input name="search" type="text" placeholder="search your food.." class="mob-input" [(ngModel)]='searchText' required>
       </ion-input>
+      <span (click)="searchMenu()" class="searchbtn"><ion-icon name="search"></ion-icon></span>
     </div>
 
     <div class="food-cat" scrollx="true">
-      <div class="cat-item" *ngFor="let category of categories">
+      <div class="cat-item" (click)="getMenuByCategories(category.Menu_Category)" *ngFor="let category of categories">
         <div class="cat-img">
-          <img src="{{category.image}}" />
+          <img src="{{category.Menu_Image}}" />
         </div>
-        <div class="cat-name">{{category.name}}</div>
+        <div class="cat-name">{{category.Menu_Category}}</div>
       </div>
     </div>
   </div>
@@ -30,9 +31,9 @@
 
   <div class="home-content">
     <div class="sel-cat-title">
-      <h2>Recommended </h2>
+      <h2> {{selectedCategory}} </h2>
       <div class="cat-actions">
-        <span>
+        <span (click)="sort()">
           <ion-icon name="funnel"></ion-icon>
         </span>
         <span>
@@ -63,14 +64,14 @@
 
       <div class="menu-item" *ngFor="let menu of menuData">
         <div class="menu-img">
-          <img src="/assets/images/cat-chinese.jpg" />
+          <img src="{{menu.Menu_Image}}" appDefaultImage='http://192.168.1.108:4001/MenuImage/default.jpg' />
           <div class="menu-name">{{menu.Menu_Name}}</div>
         </div>
         <div class="menu-action">
           <span class="menu-price">&#8377;{{menu.Price}}</span>
           <span class="add-btn" (click)="cartService.addToCart(menu)">
             <ion-icon name="add"></ion-icon> ADD
-          </span>
+          </span> 
         </div>
       </div>
       <br style="clear: both;" />

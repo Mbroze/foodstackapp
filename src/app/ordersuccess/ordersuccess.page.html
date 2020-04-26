@@ -1,0 +1,22 @@
+<ion-header>
+  <!--  <ion-toolbar>
+    <ion-title>ordersuccess</ion-title>
+  </ion-toolbar> -->
+</ion-header>
+
+<ion-content>
+  <div class="order-page">
+    <span class="suc">
+      <ion-icon name="checkmark-done-outline"></ion-icon>
+    </span>
+    <p>Thank You for your order!</p>
+
+
+    <div class="o-details">
+      <p>Order No : {{orderId}}</p>
+      <p>Your order will be delivered in 30 minutes </p>
+    </div>
+
+    <span routerLink="/tabs/home" class="con-btn">Continue</span>
+  </div>
+</ion-content>

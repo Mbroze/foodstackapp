@@ -25,7 +25,22 @@ ion-slides{
     --placeholder-font-style: italic;
     font-size: 13px;
     color: #fff;
+    float: left;
+    width: 85%;
   } 
+
+  span.searchbtn{
+    width: 30px;
+    height: 30px;
+    background: #fff;
+    color: #06023c;
+    line-height: 37px;
+    display: inline-block;
+    text-align: center;
+    margin: 0 8px;
+    border-radius: 50%;
+  }
+ 
 
   .food-cat[scrollx=true]{
     margin: 10px 5px;

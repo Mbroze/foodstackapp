@@ -5,6 +5,8 @@ import { CartService } from '../service/cart.service';
 import { HttpService } from "../service/http.service";
 import { Config } from "../config/config";
 import { LoadingController } from '@ionic/angular';
+import { MenuService } from '../service/menu.service';
+import { async } from '@angular/core/testing';
 
 @Component({
   selector: 'app-home',
@@ -12,6 +14,9 @@ import { LoadingController } from '@ionic/angular';
   styleUrls: ['home.page.scss']
 })
 export class HomePage implements OnInit {
+
+  searchText: string = '';
+  selectedCategory: string = 'All'
 
   slides: any = [{
     image: 'https://imageslidermaker.com/gallery/ism/images/slides/bananas-698608_1280.jpg'
@@ -24,32 +29,7 @@ export class HomePage implements OnInit {
   }]
 
 
-  categories: any = [{
-    cat_id: '1',
-    name: 'Chinese',
-    image: '/assets/images/cat-chinese.jpg'
-  }, {
-    cat_id: '2',
-    name: 'Pizza',
-    image: '/assets/images/cat-chinese.jpg'
-  }, {
-    cat_id: '3',
-    name: 'Dosa',
-    image: '/assets/images/cat-chinese.jpg'
-  },
-  {
-    cat_id: '1',
-    name: 'Chinese',
-    image: '/assets/images/cat-chinese.jpg'
-  }, {
-    cat_id: '2',
-    name: 'Pizza',
-    image: '/assets/images/cat-chinese.jpg'
-  }, {
-    cat_id: '3',
-    name: 'Dosa',
-    image: '/assets/images/cat-chinese.jpg'
-  }]
+  categories: any;
 
   menuData: any = [
     {
@@ -81,51 +61,123 @@ export class HomePage implements OnInit {
   constructor(
     private httpService: HttpService,
     private loadingController: LoadingController,
+    public menuService: MenuService,
     public cartService: CartService) {
 
   }
 
- async ngOnInit() {
+  async ngOnInit() {
 
-  const  loading= await this.loadingController.create({
+    this.getAllMenu();
+
+    this.getCategories();
+
+    this.cartService.getCartDetails().then(() => { })
+  }
+
+  async getAllMenu() {
+    const loading = await this.loadingController.create({
       message: 'Please wait...',
       duration: 2000
     })
-   await loading.present();
+    await loading.present();
 
     this.httpService.httpGet(`${Config.apiEndPoint}Services/GetAllMenu`)
       .subscribe(async (response: any) => {
         this.menuData = response.Data
         await loading.dismiss();
       })
-    
-
-    this.cartService.getCartDetails().then(() => { })
   }
 
+  async getCategories() {
 
-  getCategories() {
-   /*  const postData = {
-      CustomerId: this.customerDetails.CustomerId,
-      MobileNo: this.customerDetails.MobileNo,
-      OTP: this.otpPin
-    }
-
-    this.httpService.httpPost(`${Config.apiEndPoint}Services/ValidateCustomerOTP`, postData)
+    this.menuService.getCategories()
       .subscribe(async (response: any) => {
-       
+        const tempArr = [{ "Menu_Category": 'All', "Menu_Image": '/assets/images/cat-chinese.jpg' }]
+        this.categories = [...tempArr, ...response.Data]
 
-        if (response.Data.isSuccess) {
-          //this.storage.set('CustomerProfileData', JSON.stringify(response.Data.CustomerProfileData));
-          await this.utilService.presentToast('OTP Verified Successfully')
-          this.router.navigate([''])
-        } else {
-          this.errMessage = response.Data.Message
-          await this.utilService.presentToast(this.errMessage)
-        }
-      }) */
+      })
+
+    /*
+ 
+     this.httpService.httpPost(`${Config.apiEndPoint}Services/ValidateCustomerOTP`, postData)
+       .subscribe(async (response: any) => {
+        
+ 
+         if (response.Data.isSuccess) {
+           //this.storage.set('CustomerProfileData', JSON.stringify(response.Data.CustomerProfileData));
+           await this.utilService.presentToast('OTP Verified Successfully')
+           this.router.navigate([''])
+         } else {
+           this.errMessage = response.Data.Message
+           await this.utilService.presentToast(this.errMessage)
+         }
+       }) */
   }
 
+  async searchMenu() {
+
+    if (this.searchText) {
+
+      this.selectedCategory = ''
+      const loading = await this.loadingController.create({
+        message: 'Please wait...',
+        duration: 2000
+      })
+      await loading.present();
+
+
+      console.log(this.searchText);
+      this.menuService.searchMenu(this.searchText)
+        .subscribe(async (response: any) => {
+          this.menuData = response.Data
+          await loading.dismiss();
+        })
+
+    }
+  }
+
+  async getMenuByCategories(category) {
+
+
+
+    if (category && category != this.selectedCategory) {
+
+      console.log(category);
+      
+
+      const loading = await this.loadingController.create({
+        message: 'Please wait...',
+        duration: 2000
+      })
+      await loading.present();
+
+      if (category == 'All') {
+        this.getAllMenu();
+      }
+      console.log(category);
+      this.menuService.getMenuByCategories(category)
+        .subscribe(async (response: any) => {
+          this.menuData = response.Data
+
+          this.selectedCategory = category
+          await loading.dismiss();
+        })
+
+    }
+  }
+
+  sort() {
+    this.menuData.sort(function (a, b) {
+      console.log(a.Price, b.Price);
+
+      return a.Price - b.Price;
+    });
+
+    console.log(this.menuData);
+
+    console.log("sort")
+  }
 
 
 
