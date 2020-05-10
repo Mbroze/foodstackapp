@@ -13,7 +13,7 @@
   </ion-header> -->
 
   <diV class="acc-sec" >
-    <ng-container *ngIf="customerDetails">
+    <ng-container *ngIf="customerDetails && customerDetails.FirstName">
     <div class="acc-action">
       <span routerLink="/update-profile">Edit Profile</span>
     </div>
@@ -21,11 +21,11 @@
     <h3>{{customerDetails.MobileNo}}</h3>
     <p>{{customerDetails.Address}} </p>
   </ng-container>
-  <ng-container *ngIf="!customerDetails">
+  <ng-container *ngIf="!customerDetails || !customerDetails.FirstName">
     <div class="acc-action">
       <span routerLink="/update-profile">Edit Profile</span>
     </div>
-    <h2>Profile not update</h2>
+    <h2>Profile not updated</h2>
   </ng-container>
   </diV>
 

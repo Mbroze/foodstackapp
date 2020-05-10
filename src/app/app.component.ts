@@ -4,6 +4,8 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Router } from '@angular/router';
+import { HttpService } from './service/http.service';
+import { Config } from './config/config';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +18,8 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private router: Router,
-    private storage: Storage
+    private storage: Storage,
+    private httpService: HttpService,
   ) {
     this.initializeApp();
   }
@@ -24,9 +27,18 @@ export class AppComponent {
   initializeApp() {
     this.platform.ready().then(async () => {
       this.statusBar.styleDefault();
+      this.updateImagePath()
       let customerDetails = await this.storage.get('CustomerProfileData')
       if (!customerDetails) this.router.navigate(['login'])
       this.splashScreen.hide();
     });
+  }
+
+
+  updateImagePath() {
+    this.httpService.httpGet(`${Config.apiEndPoint}Configure/UpdateMenuImagePath`)
+      .subscribe(async (response: any) => {
+        console.log('updateImagePath', response)
+      })
   }
 }

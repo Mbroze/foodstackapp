@@ -10,11 +10,14 @@
       <ion-icon name="checkmark-done-outline"></ion-icon>
     </span>
     <p>Thank You for your order!</p>
-
+    <p>Your order will be delivered in {{minutesToDeliver ? minutesToDeliver : '30'}} minutes. </p>
 
     <div class="o-details">
-      <p>Order No : {{orderId}}</p>
-      <p>Your order will be delivered in 30 minutes </p>
+      <p>Order No : {{orderIdLong}}</p>
+      <p>Total Bill : {{totalBill}}</p>
+      <ng-container *ngFor="let menu of orderDetails">
+        <p class="menu">{{menu.Menu_Name}} x {{menu.Quantity}} : {{ menu.Amount}} </p>
+      </ng-container>
     </div>
 
     <span routerLink="/tabs/home" class="con-btn">Continue</span>
